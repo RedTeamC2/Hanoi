@@ -14,8 +14,8 @@ void moveStack(Hanoi& nt, int from, int to, int howmany) {
     nt.move(from, to); // Move the single disk
     // Visualize the move
     SymbolCollection sc = nt.getVisual();
-    nt.br.setDataStructure(&sc); // Use the Bridges object directly
-    nt.br.visualize();
+    nt.getBridges().setDataStructure(&sc); // Use the getter method
+    nt.getBridges().visualize();
     return;
   }
 
@@ -29,8 +29,8 @@ void moveStack(Hanoi& nt, int from, int to, int howmany) {
   nt.move(from, to);
   // Visualize the move
   SymbolCollection sc = nt.getVisual();
-  nt.br.setDataStructure(&sc); // Use the Bridges object directly
-  nt.br.visualize();
+  nt.getBridges().setDataStructure(&sc); // Use the getter method
+  nt.getBridges().visualize();
 
   // Step 3: Move the (howmany - 1) disks from "aux" to "to"
   moveStack(nt, aux, to, howmany - 1);
@@ -41,7 +41,7 @@ int main() {
   Bridges bridges(126, "homelab192", "1567609189770");
   // Title and description
   bridges.setTitle("Towers of Hanoi");
-  bridges.setDescription("Moving only one disk at a time, how to move the first stack to the second stack without ever having a large disk sitting on top of a small disk?");
+  bridges.setDescription("Moving only one disk at a time, how to move the first stack to the second stack without ever having a large disk sitting on top of a small disk.");
   
   // Initialize Hanoi with 5 disks
   Hanoi nt(5, bridges);
