@@ -7,35 +7,53 @@
 using namespace std;
 using namespace bridges;
 
-
+// Recursive function to solve Towers of Hanoi
 void moveStack(Hanoi& nt, int from, int to, int howmany) {
-  //TODO
-  
+  // Base case: if there's only one disk to move
+  if (howmany == 1) {
+    nt.move(from, to); // Move the single disk
+    // Visualize the move
+    SymbolCollection sc = nt.getVisual();
+    nt.getBridges().setDataStructure(&sc);
+    nt.getBridges().visualize();
+    return;
+  }
+
+  // Recursive case:
+  int aux = 6 - from - to; // Calculate the auxiliary peg (1 + 2 + 3 = 6)
+
+  // Step 1: Move the top (howmany - 1) disks from "from" to "aux"
+  moveStack(nt, from, aux, howmany - 1);
+
+  // Step 2: Move the bottom disk from "from" to "to"
+  nt.move(from, to);
+  // Visualize the move
+  SymbolCollection sc = nt.getVisual();
+  nt.getBridges().setDataStructure(&sc);
+  nt.getBridges().visualize();
+
+  // Step 3: Move the (howmany - 1) disks from "aux" to "to"
+  moveStack(nt, aux, to, howmany - 1);
 }
 
 int main() {
-  //create Bridges object
-  Bridges bridges (126, "YOUR_USER_ID", "YOUR_API_KEY");
-  // title, description
+  // Create Bridges object
+  Bridges bridges(126, "YOUR_USER_ID", "YOUR_API_KEY");
+  // Title and description
   bridges.setTitle("Towers of Hanoi");
-  bridges.setDescription("Moving only one disk at a time, how to move the first stack to the second stack without ever having a large disk sittign ontop of a small disk?");
+  bridges.setDescription("Moving only one disk at a time, how to move the first stack to the second stack without ever having a large disk sitting on top of a small disk?");
   
-  Hanoi nt (5, bridges);
+  // Initialize Hanoi with 5 disks
+  Hanoi nt(5, bridges);
   
-  // set visualizer type
+  // Set visualizer type
   SymbolCollection sc = nt.getVisual();
   bridges.setDataStructure(&sc);
-  // visualize the JSON and Collection
+  // Visualize the initial state
   bridges.visualize();
   
-
+  // Solve the Towers of Hanoi problem
   moveStack(nt, 1, 2, 5);
-		
-  // nt.move(1,2);
-  // // set visualizer type
-  // bridges.setDataStructure(nt.getVisual());
-  // // visualize the JSON and Collection
-  // bridges.visualize();
 
   return 0;
 }
