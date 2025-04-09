@@ -26,7 +26,9 @@ public:
       d1.push_back(nbdisk-i);
     }
   }
-
+  Bridges& getBridges() {
+    return br;
+  }
   void move(int src, int dst) {
     int d = -1;
     std::vector<int>* srcal = nullptr;
